@@ -1,11 +1,12 @@
 import {useQuery} from "@tanstack/react-query"
+import { Weather } from "../types/weather.type";
 
-export async function getWeather(searchQuery: string) {
+export async function getWeather(searchQuery: string): Promise<Weather> {
   const fetchResponse = await fetch(
-    `https://www.prevision-meteo.ch/services/json/${searchQuery}`
+    `https://weather-api.mathisbarre.com/${searchQuery}`
   );
 
-  const jsonResponse = fetchResponse.json()
+  const jsonResponse: Weather = await fetchResponse.json()
 
   return jsonResponse
 }
