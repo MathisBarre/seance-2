@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import {
   ActivityIndicator,
+  Button,
   Image,
   ScrollView,
   StyleSheet,
@@ -20,13 +21,15 @@ import windIcon from "../assets/icons/wind.png"
 import rainIcon from "../assets/icons/rain.png"
 import humidityIcon from "../assets/icons/humidity.png"
 import sunIcon from "../assets/icons/sun.png"
+import { useNavigation } from "@react-navigation/native";
 
 interface HomeScreenProps {}
 
 const HomeScreen = ({}: HomeScreenProps) => {
   const [searchQuery, setSearchQuery] = useState("nantes");
-  const { isLoading, isError, data: weather } = useGetWeather("nantes");
+  const { isLoading, isError, data: weather, refetch } = useGetWeather("nantes");
   const { top } = useSafeAreaInsets();
+  const navigation = useNavigation()
 
   if (isLoading) {
     return (
@@ -39,6 +42,22 @@ const HomeScreen = ({}: HomeScreenProps) => {
         }}
       >
         <ActivityIndicator size={"large"}></ActivityIndicator>
+      </View>
+    );
+  }
+
+  if (isError || !weather)  {
+    return (
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          flexGrow: 1,
+          backgroundColor: "#000918",
+        }}
+      >
+        <Text style={{ fontSize: 18, fontWeight: "bold", color: "white" }}>Erreur</Text>
+        <Button title="Réessayer ?" onPress={() => refetch()}></Button>
       </View>
     );
   }
@@ -69,7 +88,7 @@ const HomeScreen = ({}: HomeScreenProps) => {
           >
             <Image
               source={{
-                uri: weather.currentConditions.iconBig,
+                uri: weather?.currentConditions?.iconBig || "",
                 height: 96,
                 width: 96,
               }}
@@ -239,8 +258,10 @@ const HomeScreen = ({}: HomeScreenProps) => {
       <SafeAreaView edges={["bottom"]} style={{ flexGrow: 1, padding: 24 }}>
         {weather.next5DaysConditions.map((conditions, index) => {
           return (
-            <>
+            <Fragment key={conditions.date}>
               <TouchableOpacity
+              // @ts-ignore
+                onPress={() => navigation.navigate("WeatherDetails")}
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
@@ -300,7 +321,7 @@ const HomeScreen = ({}: HomeScreenProps) => {
                   }}
                 />
               )}
-            </>
+            </Fragment>
           );
         })}
       </SafeAreaView>
