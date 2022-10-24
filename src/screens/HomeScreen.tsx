@@ -3,11 +3,8 @@ import {
   ActivityIndicator,
   Button,
   Image,
-  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
-  Touchable,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -15,21 +12,21 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import splashScreen from "../../assets/splash.png";
 import { useGetWeather } from "../api/getWeather";
-import windIcon from "../assets/icons/wind.png"
-import rainIcon from "../assets/icons/rain.png"
-import humidityIcon from "../assets/icons/humidity.png"
-import sunIcon from "../assets/icons/sun.png"
 import { useNavigation } from "@react-navigation/native";
+import x from "../assets/icons/rain.png"
 
 interface HomeScreenProps {}
 
 const HomeScreen = ({}: HomeScreenProps) => {
-  const [searchQuery, setSearchQuery] = useState("nantes");
-  const { isLoading, isError, data: weather, refetch } = useGetWeather("nantes");
+  const {
+    isLoading,
+    isError,
+    data: weather,
+    refetch,
+  } = useGetWeather("nantes");
   const { top } = useSafeAreaInsets();
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   if (isLoading) {
     return (
@@ -46,7 +43,7 @@ const HomeScreen = ({}: HomeScreenProps) => {
     );
   }
 
-  if (isError || !weather)  {
+  if (isError || !weather) {
     return (
       <View
         style={{
@@ -56,7 +53,9 @@ const HomeScreen = ({}: HomeScreenProps) => {
           backgroundColor: "#000918",
         }}
       >
-        <Text style={{ fontSize: 18, fontWeight: "bold", color: "white" }}>Erreur</Text>
+        <Text style={{ fontSize: 18, fontWeight: "bold", color: "white" }}>
+          Erreur
+        </Text>
         <Button title="Réessayer ?" onPress={() => refetch()}></Button>
       </View>
     );
@@ -126,14 +125,15 @@ const HomeScreen = ({}: HomeScreenProps) => {
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
-            <View
+            <Image
               style={{
                 width: 16,
                 height: 16,
-                backgroundColor: "white",
                 marginBottom: 4,
               }}
-            ></View>
+              source={require("../assets/icons/wind.png")}
+              resizeMode="contain"
+            />
             <Text
               style={{
                 color: "white",
@@ -159,14 +159,15 @@ const HomeScreen = ({}: HomeScreenProps) => {
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
-            <View
+            <Image
               style={{
                 width: 16,
                 height: 16,
-                backgroundColor: "white",
                 marginBottom: 4,
               }}
-            ></View>
+              source={require("../assets/icons/humidity.png")}
+              resizeMode="contain"
+            />
             <Text
               style={{
                 color: "white",
@@ -192,14 +193,15 @@ const HomeScreen = ({}: HomeScreenProps) => {
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
-            <View
+            <Image
               style={{
                 width: 16,
                 height: 16,
-                backgroundColor: "white",
                 marginBottom: 4,
               }}
-            ></View>
+              source={require("../assets/icons/rain.png")}
+              resizeMode="contain"
+            />
             <Text
               style={{
                 color: "white",
@@ -224,14 +226,15 @@ const HomeScreen = ({}: HomeScreenProps) => {
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
-            <View
+            <Image
               style={{
                 width: 16,
                 height: 16,
-                backgroundColor: "white",
                 marginBottom: 4,
               }}
-            ></View>
+              source={require("../assets/icons/sun.png")}
+              resizeMode="contain"
+            />
             <Text
               style={{
                 color: "white",
@@ -260,7 +263,7 @@ const HomeScreen = ({}: HomeScreenProps) => {
           return (
             <Fragment key={conditions.date}>
               <TouchableOpacity
-              // @ts-ignore
+                // @ts-ignore
                 onPress={() => navigation.navigate("WeatherDetails")}
                 style={{
                   flexDirection: "row",
