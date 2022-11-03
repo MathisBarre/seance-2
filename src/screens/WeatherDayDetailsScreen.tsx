@@ -1,3 +1,4 @@
+import { useRoute } from "@react-navigation/native";
 import React, { Fragment } from "react";
 import {
   ActivityIndicator,
@@ -8,16 +9,19 @@ import {
   View,
 } from "react-native";
 import { useGetWeather } from "../api/getWeather";
+import { useGetWeatherDetails } from "../api/getWeatherDetails";
 
 interface WeatherDetailsProps {}
 
 const WeatherDetails = ({}: WeatherDetailsProps) => {
+  const route: any = useRoute()
+
   const {
     isLoading,
     isError,
     data: weather,
     refetch,
-  } = useGetWeather("nantes");
+  } = useGetWeatherDetails("nantes", route.params.date);
 
   if (isLoading) {
     return (
@@ -62,7 +66,7 @@ const WeatherDetails = ({}: WeatherDetailsProps) => {
       <View style={{
         padding: 24
       }}>
-        {weather.next5DaysConditions[0].hourly.map((conditions, index) => {
+        {weather.hourly.map((conditions, index) => {
           return (
             <Fragment key={conditions.datetime}>
               <View
@@ -113,7 +117,7 @@ const WeatherDetails = ({}: WeatherDetailsProps) => {
                   {conditions.temperature.unit}
                 </Text>
               </View>
-              {weather.next5DaysConditions.length - 1 !== index && (
+              {weather.hourly.length - 1 !== index && (
                 <View
                   style={{
                     height: 1,

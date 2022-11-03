@@ -55,18 +55,18 @@ export interface Hourly {
   icon: string;
 }
 
-export interface Next5DaysConditions {
+export interface DayConditions {
   date: string;
   condition: string;
   conditionKey: string;
   icon: string;
   iconBig: string;
   temperature: Temperature2;
-  hourly: Hourly[];
+  hourly?: Hourly[];
 }
 
 export interface Weather {
   dataProvider: string;
   currentConditions: CurrentConditions;
-  next5DaysConditions: Next5DaysConditions[];
+  next5DaysConditions: DayConditions[];
 }

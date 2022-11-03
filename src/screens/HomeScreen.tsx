@@ -263,7 +263,7 @@ const HomeScreen = ({}: HomeScreenProps) => {
             <Fragment key={conditions.date}>
               <TouchableOpacity
                 // @ts-ignore
-                onPress={() => navigation.navigate("WeatherDetails")}
+                onPress={() => navigation.navigate("WeatherDetails", {date: conditions.date})}
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
