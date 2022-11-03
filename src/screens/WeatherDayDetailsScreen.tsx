@@ -5,7 +5,6 @@ import {
   Image,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { useGetWeather } from "../api/getWeather";

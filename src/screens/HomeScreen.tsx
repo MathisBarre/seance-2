@@ -14,7 +14,6 @@ import {
 } from "react-native-safe-area-context";
 import { useGetWeather } from "../api/getWeather";
 import { useNavigation } from "@react-navigation/native";
-import x from "../assets/icons/rain.png"
 
 interface HomeScreenProps {}
 

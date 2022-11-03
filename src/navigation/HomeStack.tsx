@@ -15,7 +15,16 @@ function HomeStack() {
       <Stack.Screen
         name="WeatherDetails"
         component={WeatherDetails}
-        options={{ headerShown: true }}
+        options={{
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: "#1b2230",
+          },
+          headerTitleStyle: {
+            color: "white",
+          },
+          headerTintColor: "white"
+        }}
       />
     </Stack.Navigator>
   );
