@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "seance-2",
+    "name": "Weather ECV",
     "slug": "seance-2",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -24,10 +24,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.mathisbarre.ecv.weather"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f5cbcf0c-f7e4-4cdc-a601-b3c696486fbd"
+      }
     }
   }
 }

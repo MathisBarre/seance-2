@@ -1,11 +1,13 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Image, View } from "react-native";
+import { Image, Platform, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CreditScreen from "../screens/CreditScreen";
 import HomeStack from "./HomeStack";
 
 const Tab = createBottomTabNavigator();
 
 function AppTabs() {
+  const insets = useSafeAreaInsets()
   return (
     <Tab.Navigator
       screenOptions={{
@@ -13,6 +15,8 @@ function AppTabs() {
         tabBarStyle: {
           backgroundColor: "#1b2230",
           borderColor: "#1b2230",
+          paddingBottom: insets.bottom + 4,
+          paddingTop: 4
         },
         tabBarActiveTintColor: "white",
       }}
