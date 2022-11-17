@@ -8,13 +8,12 @@ import {
   Text,
   View,
 } from "react-native";
-import { useGetWeather } from "../api/getWeather";
 import { useGetWeatherDetails } from "../api/getWeatherDetails";
 
 interface WeatherDetailsProps {}
 
 const WeatherDetails = ({}: WeatherDetailsProps) => {
-  const route: any = useRoute()
+  const route: any = useRoute();
 
   const {
     isLoading,
@@ -22,6 +21,7 @@ const WeatherDetails = ({}: WeatherDetailsProps) => {
     isError,
     data: weather,
     refetch,
+    isSuccess
   } = useGetWeatherDetails("nantes", route.params.date);
 
   if (isLoading || isFetching) {
@@ -58,82 +58,89 @@ const WeatherDetails = ({}: WeatherDetailsProps) => {
     );
   }
 
-  return (
-    <ScrollView
-      style={{
-        backgroundColor: "#000918",
-      }}
-    >
-      <View style={{
-        padding: 24
-      }}>
-        {weather.hourly.map((conditions, index) => {
-          return (
-            <Fragment key={conditions.datetime}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  paddingVertical: 24,
-                  justifyContent: "space-between",
-                }}
-              >
-                <Text
-                  style={{
-                    color: "white",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  {new Date(conditions.datetime).toLocaleTimeString("fr-FR", {timeStyle: "short"})}
-                </Text>
+  if (isSuccess)
+    return (
+      <ScrollView
+        style={{
+          backgroundColor: "#000918",
+        }}
+      >
+        <View
+          style={{
+            padding: 24,
+          }}
+        >
+          {weather.hourly.map((conditions, index) => {
+            return (
+              <Fragment key={conditions.datetime}>
                 <View
                   style={{
-                    alignItems: "center",
                     flexDirection: "row",
+                    alignItems: "center",
+                    paddingVertical: 24,
+                    justifyContent: "space-between",
                   }}
                 >
-                  <Image
-                    source={{ uri: conditions.icon, height: 32, width: 32 }}
-                    resizeMode="contain"
-                    style={{ marginRight: 16 }}
-                  />
                   <Text
                     style={{
                       color: "white",
                       textTransform: "capitalize",
-                      textAlign: "right",
-                      opacity: 0.5,
                     }}
                   >
-                    {conditions.condition}
+                    {new Date(conditions.datetime).toLocaleTimeString("fr-FR", {
+                      timeStyle: "short",
+                    })}
+                  </Text>
+                  <View
+                    style={{
+                      alignItems: "center",
+                      flexDirection: "row",
+                    }}
+                  >
+                    <Image
+                      source={{ uri: conditions.icon, height: 32, width: 32 }}
+                      resizeMode="contain"
+                      style={{ marginRight: 16 }}
+                    />
+                    <Text
+                      style={{
+                        color: "white",
+                        textTransform: "capitalize",
+                        textAlign: "right",
+                        opacity: 0.5,
+                      }}
+                    >
+                      {conditions.condition}
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      color: "white",
+                      textAlign: "right",
+                    }}
+                  >
+                    {conditions.temperature.value}
+                    {conditions.temperature.unit}
                   </Text>
                 </View>
-                <Text
-                  style={{
-                    color: "white",
-                    textAlign: "right",
-                  }}
-                >
-                  {conditions.temperature.value}
-                  {conditions.temperature.unit}
-                </Text>
-              </View>
-              {weather.hourly.length - 1 !== index && (
-                <View
-                  style={{
-                    height: 1,
-                    width: "100%",
-                    backgroundColor: "white",
-                    opacity: 0.1,
-                  }}
-                />
-              )}
-            </Fragment>
-          );
-        })}
-      </View>
-    </ScrollView>
-  );
+                {weather.hourly.length - 1 !== index && (
+                  <View
+                    style={{
+                      height: 1,
+                      width: "100%",
+                      backgroundColor: "white",
+                      opacity: 0.1,
+                    }}
+                  />
+                )}
+              </Fragment>
+            );
+          })}
+        </View>
+      </ScrollView>
+    );
+
+    return null
 };
 
 export default WeatherDetails;

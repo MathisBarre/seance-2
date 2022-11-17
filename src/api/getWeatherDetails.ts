@@ -9,6 +9,10 @@ export async function getWeatherDetails(
     `https://weather-api.mathisbarre.com/${searchQuery}/${date}`
   );
 
+  if (!fetchResponse.ok) {
+    throw new Error("REQUEST_FAILED")
+  }
+
   const jsonResponse: DayConditions = await fetchResponse.json();
 
   return jsonResponse;

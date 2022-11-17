@@ -6,6 +6,10 @@ export async function getWeather(searchQuery: string): Promise<Weather> {
     `https://weather-api.mathisbarre.com/${searchQuery}`
   );
 
+  if (!fetchResponse.ok) {
+    throw new Error("REQUEST_FAILED")
+  }
+
   const jsonResponse: Weather = await fetchResponse.json();
 
   return jsonResponse;
