@@ -18,12 +18,13 @@ const WeatherDetails = ({}: WeatherDetailsProps) => {
 
   const {
     isLoading,
+    isFetching,
     isError,
     data: weather,
     refetch,
   } = useGetWeatherDetails("nantes", route.params.date);
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <View
         style={{

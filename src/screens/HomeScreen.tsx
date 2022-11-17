@@ -20,6 +20,7 @@ interface HomeScreenProps {}
 const HomeScreen = ({}: HomeScreenProps) => {
   const {
     isLoading,
+    isFetching,
     isError,
     data: weather,
     refetch,
@@ -27,12 +28,12 @@ const HomeScreen = ({}: HomeScreenProps) => {
   const { top } = useSafeAreaInsets();
   const navigation = useNavigation();
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <View
         style={{
           backgroundColor: "#000918",
-          flex: 1,
+          flexGrow: 1,
           justifyContent: "center",
           alignItems: "center",
         }}
